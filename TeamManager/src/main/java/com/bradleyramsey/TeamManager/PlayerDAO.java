@@ -35,11 +35,12 @@ public class PlayerDAO extends DataAccessObject<Player>{
 			statement.setInt(4, dtObj.getPlayerNumber());
 			statement.setInt(5, dtObj.getHeight());
 			statement.setInt(6, dtObj.getWeight());
+			statement.execute();
+			return null;
 		}catch(SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
-		return null;
 	}
 
 	@Override
