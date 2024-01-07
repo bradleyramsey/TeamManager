@@ -1,12 +1,12 @@
 package swingGUIs;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.NumberFormat;
 
 import javax.swing.JButton;
@@ -19,18 +19,27 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 
+import com.bradleyramsey.TeamManager.DBConnectionManager;
+import com.bradleyramsey.TeamManager.Player;
+import com.bradleyramsey.TeamManager.PlayerDAO;
+
 public class CreatePlayerGUI extends JFrame implements ActionListener{
-	JButton button;
-	JTextField firstNameField;
-	JTextField lastNameField;
-	JComboBox<String> positionDropDown;
+	private static final long serialVersionUID = 1L;
 	
+	// Initialize DB Connection
+	private DBConnectionManager dbcm;
+	// Initialize GUI Objects
+	private JButton button;
+	private JTextField firstNameField;
+	private JTextField lastNameField;
+	private JComboBox<String> positionDropDown;
 	private JPanel contentPane;
 	private JFormattedTextField playerNumberField;
 	private JFormattedTextField heightField;
 	private JFormattedTextField weightField;
-
-	public CreatePlayerGUI(){
+	// Constructor
+	public CreatePlayerGUI(DBConnectionManager dbcm){
+		this.dbcm = dbcm;
 		NumberFormat format = NumberFormat.getInstance();
 	    NumberFormatter formatter = new NumberFormatter(format);
 	    formatter.setValueClass(Integer.class);
@@ -76,21 +85,21 @@ public class CreatePlayerGUI extends JFrame implements ActionListener{
 		lblPlayerNumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		contentPane.add(lblPlayerNumber);
 		
-		JFormattedTextField playerNumberField = new JFormattedTextField(formatter);
+		playerNumberField = new JFormattedTextField(formatter);
 		contentPane.add(playerNumberField);
 		
 		JLabel lblHeight = new JLabel("Height (Inches):");
 		lblHeight.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		contentPane.add(lblHeight);
 		
-		JFormattedTextField heightField = new JFormattedTextField(formatter);
+		heightField = new JFormattedTextField(formatter);
 		contentPane.add(heightField);
 		
 		JLabel lblWeight = new JLabel("Weight (lbs):");
 		lblWeight.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		contentPane.add(lblWeight);
 		
-		JFormattedTextField weightField = new JFormattedTextField(formatter);
+		weightField = new JFormattedTextField(formatter);
 		contentPane.add(weightField);
 		
 		JPanel panel = new JPanel();
@@ -109,6 +118,20 @@ public class CreatePlayerGUI extends JFrame implements ActionListener{
 			if (validateForm()) {
 				this.setVisible(false);
 				this.dispose();
+				try {
+					Connection connection = dbcm.getConnection();
+					PlayerDAO playerDAO = new PlayerDAO(connection);
+					Player player = new Player();
+					player.setFirstName(firstNameField.getText());
+					player.setLastName(lastNameField.getText());
+					player.setPosition(positionDropDown.getName());
+					player.setPlayerNumber(Integer.parseInt(playerNumberField.getText()));
+					player.setHeight(Integer.parseInt(heightField.getText()));
+					player.setWeight(Integer.parseInt(weightField.getText()));
+					playerDAO.insert(player);
+				}catch(SQLException f) {
+					f.printStackTrace();
+				}
 			}
 		}
 	}
