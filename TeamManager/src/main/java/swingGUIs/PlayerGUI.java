@@ -1,6 +1,5 @@
 package swingGUIs;
 
-
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -23,7 +22,7 @@ import com.bradleyramsey.TeamManager.DBConnectionManager;
 import com.bradleyramsey.TeamManager.Player;
 import com.bradleyramsey.TeamManager.PlayerDAO;
 
-public class CreatePlayerGUI extends JFrame implements ActionListener{
+public class PlayerGUI extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	
 	// Initialize DB Connection
@@ -38,7 +37,7 @@ public class CreatePlayerGUI extends JFrame implements ActionListener{
 	private JFormattedTextField heightField;
 	private JFormattedTextField weightField;
 	// Constructor
-	public CreatePlayerGUI(DBConnectionManager dbcm){
+	public PlayerGUI(DBConnectionManager dbcm){
 		this.dbcm = dbcm;
 		NumberFormat format = NumberFormat.getInstance();
 	    NumberFormatter formatter = new NumberFormatter(format);
@@ -111,6 +110,7 @@ public class CreatePlayerGUI extends JFrame implements ActionListener{
 		button.setBounds(219, 10, 103, 32);
 		button.addActionListener(this);
 		panel.add(button);
+		
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
