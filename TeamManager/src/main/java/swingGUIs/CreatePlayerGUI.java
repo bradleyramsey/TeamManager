@@ -124,7 +124,7 @@ public class CreatePlayerGUI extends JFrame implements ActionListener{
 					Player player = new Player();
 					player.setFirstName(firstNameField.getText());
 					player.setLastName(lastNameField.getText());
-					player.setPosition(positionDropDown.getName());
+					player.setPosition(positionDropDown.getSelectedItem().toString());
 					player.setPlayerNumber(Integer.parseInt(playerNumberField.getText()));
 					player.setHeight(Integer.parseInt(heightField.getText()));
 					player.setWeight(Integer.parseInt(weightField.getText()));
