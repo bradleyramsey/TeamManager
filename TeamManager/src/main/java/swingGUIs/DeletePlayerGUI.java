@@ -5,12 +5,18 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.bradleyramsey.TeamManager.DBConnectionManager;
+import com.bradleyramsey.TeamManager.PlayerDAO;
 
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import javax.swing.JButton;
 
 public class DeletePlayerGUI extends JFrame {
@@ -61,6 +67,25 @@ public class DeletePlayerGUI extends JFrame {
 		JButton btnSubmit = new JButton("Submit");
 		btnSubmit.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnSubmit.setBounds(135, 86, 119, 35);
+		btnSubmit.addActionListener(
+				  new ActionListener() {
+				    public void actionPerformed(ActionEvent e) {
+				    	try {
+				    		Connection connection = dbcm.getConnection();
+				    		PlayerDAO playerDAO = new PlayerDAO(connection);
+				    		playerDAO.delete(Integer.parseInt(deletePlayerField.getText()));
+				 
+				    		setVisible(false); // Make Main Menu invisible
+				    		dispose(); // Close Main Menu
+				    		MainMenuGUI gui = new MainMenuGUI(dbcm); // Open Main Menu
+				    		gui.setVisible(true); // Make Main Menu visible
+				    	}catch (SQLException f) {
+							f.printStackTrace();
+							throw new RuntimeException();
+						}
+				    }
+				  }
+				);
 		contentPaneDeletePlayer.add(btnSubmit);
 	}
 }
