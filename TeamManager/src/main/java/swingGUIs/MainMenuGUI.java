@@ -58,9 +58,20 @@ public class MainMenuGUI extends JFrame{
 		btnSearchByPlayer.setBackground(SystemColor.activeCaptionBorder);
 		
 		JButton btnDeletePlayer = new JButton("Delete Player");
+		
 		btnDeletePlayer.setBounds(15, 237, 283, 64);
 		btnDeletePlayer.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnDeletePlayer.setBackground(SystemColor.activeCaptionBorder);
+		btnDeletePlayer.addActionListener(
+				  new ActionListener() {
+				    public void actionPerformed(ActionEvent e) {
+				      setVisible(false); // Make Main Menu invisible
+				      dispose(); // Close Main Menu
+				      DeletePlayerGUI gui = new DeletePlayerGUI(dbcm); // Open Create Player Menu
+				      gui.setVisible(true); // Make Create Player Menu visible
+				    }
+				  }
+				);
 		contentPane.setLayout(null);
 		contentPane.add(btnCreatePlayer);
 		contentPane.add(btnSeachById);
