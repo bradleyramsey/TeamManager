@@ -3,7 +3,6 @@ package com.bradleyramsey.TeamManager;
 import java.awt.EventQueue;
 
 import swingGUIs.MainMenuGUI;
-import swingGUIs.PlayerGUI;
 
 public class JDBCExecute {
 

@@ -10,6 +10,8 @@ public class PlayerDAO extends DataAccessObject<Player>{
 	public static final String INSERT = "INSERT INTO player (first_name, last_name, "
 			+ "position, player_number, height, weight) VALUES (?, ?, ?, ?, ?, ?)";
 	
+	public static final String DELETE = "DELETE FROM player WHERE player_id = ?";
+	
 	public PlayerDAO (Connection connection) {
 		super(connection);
 	}
@@ -45,8 +47,13 @@ public class PlayerDAO extends DataAccessObject<Player>{
 
 	@Override
 	public void delete(long id) {
-		// TODO Auto-generated method stub
-		
+		try (PreparedStatement statement = this.connection.prepareStatement(DELETE);){
+			statement.setLong(1, id);
+			statement.execute();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
 	}
 	
 }

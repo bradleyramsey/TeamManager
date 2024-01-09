@@ -19,12 +19,10 @@ public class MainMenuGUI extends JFrame{
 	private JPanel contentPane;
 	private JButton btnCreatePlayer;
 	
-	private DBConnectionManager dbcm;
 	/**
 	 * Create the frame.
 	 */
 	public MainMenuGUI(DBConnectionManager dbcm) {
-		this.dbcm = dbcm;
 		setTitle("Main Menu");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 338, 424);
@@ -37,10 +35,10 @@ public class MainMenuGUI extends JFrame{
 		btnCreatePlayer.addActionListener(
 				  new ActionListener() {
 				    public void actionPerformed(ActionEvent e) {
-				      setVisible(false);
-				      dispose();
-				      PlayerGUI gui = new PlayerGUI(dbcm);
-				      gui.setVisible(true);
+				      setVisible(false); // Make Main Menu invisible
+				      dispose(); // Close Main Menu
+				      PlayerGUI gui = new PlayerGUI(dbcm); // Open Create Player Menu
+				      gui.setVisible(true); // Make Create Player Menu visible
 				    }
 				  }
 				);
