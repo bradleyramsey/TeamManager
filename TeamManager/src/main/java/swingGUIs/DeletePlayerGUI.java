@@ -1,3 +1,4 @@
+
 package swingGUIs;
 
 import javax.swing.JFrame;
@@ -74,7 +75,6 @@ public class DeletePlayerGUI extends JFrame {
 				    		Connection connection = dbcm.getConnection();
 				    		PlayerDAO playerDAO = new PlayerDAO(connection);
 				    		playerDAO.delete(Integer.parseInt(deletePlayerField.getText()));
-				 
 				    		setVisible(false); // Make Main Menu invisible
 				    		dispose(); // Close Main Menu
 				    		MainMenuGUI gui = new MainMenuGUI(dbcm); // Open Main Menu

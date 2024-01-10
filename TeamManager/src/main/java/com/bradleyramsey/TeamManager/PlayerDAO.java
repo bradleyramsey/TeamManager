@@ -2,6 +2,7 @@ package com.bradleyramsey.TeamManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import utilsDB.DataAccessObject;
@@ -11,6 +12,9 @@ public class PlayerDAO extends DataAccessObject<Player>{
 			+ "position, player_number, height, weight) VALUES (?, ?, ?, ?, ?, ?)";
 	
 	public static final String DELETE = "DELETE FROM player WHERE player_id = ?";
+	
+	public static final String GET_BY_NAME = "SELECT player_id, first_name, last_name, "
+			+ "position FROM player WHERE first_name = ?";
 	
 	public PlayerDAO (Connection connection) {
 		super(connection);
@@ -22,6 +26,20 @@ public class PlayerDAO extends DataAccessObject<Player>{
 		return null;
 	}
 
+	public Player findByName(String first_name) {
+		try (PreparedStatement statement = this.connection.prepareStatement(GET_BY_NAME);){
+			statement.setString(1, first_name);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				System.out.println(rs.getLong("player_id") + "\t" + rs.getString("first_name") +
+									"\t" + rs.getString("last_name") + "\t" + rs.getString("position"));
+			}
+			return null;
+		}catch(SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+	}
 	@Override
 	public Player update(Player dtObj) {
 		// TODO Auto-generated method stub

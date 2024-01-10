@@ -56,7 +56,16 @@ public class MainMenuGUI extends JFrame{
 		btnSearchByPlayer.setBounds(15, 163, 283, 64);
 		btnSearchByPlayer.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnSearchByPlayer.setBackground(SystemColor.activeCaptionBorder);
-		
+		btnSearchByPlayer.addActionListener(
+				  new ActionListener() {
+				    public void actionPerformed(ActionEvent e) {
+				      setVisible(false); // Make Main Menu invisible
+				      dispose(); // Close Main Menu
+				      SearchPlayerByNameGUI gui = new SearchPlayerByNameGUI(dbcm); // Open Create Player Menu
+				      gui.setVisible(true); // Make Create Player Menu visible
+				    }
+				  }
+				);
 		JButton btnDeletePlayer = new JButton("Delete Player");
 		
 		btnDeletePlayer.setBounds(15, 237, 283, 64);
